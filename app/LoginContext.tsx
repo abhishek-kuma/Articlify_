@@ -7,9 +7,10 @@ interface Props {
 
 export const LoginContextProvider = ({ children }: Props) => {
     const [status, setStatus] = useState<boolean>(false);
+    const [name , setName] = useState<string>("");
 
     return (
-        <loginContext.Provider value={{ status , setStatus }}>
+        <loginContext.Provider value={{ status , setStatus,name , setName }}>
             {children}
         </loginContext.Provider>
     )

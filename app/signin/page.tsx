@@ -21,7 +21,7 @@ import { useLoginContext } from "../LoginContext"
 import { useRouter } from "next/navigation"
 
 export interface ContextType {
-  status: boolean
+  status: boolean,
   setStatus: Function
 }
 
@@ -37,12 +37,13 @@ export default function LoginAccount() {
   
   async function handleLogin() {
     try {
-      await AuthService.login({ email, password });
-      toast.success("Login success ✅");
+      const userinfo = await AuthService.login({ email, password });
+      // console.log(userinfo)
+      toast.success("Sign In success ✅");
       setStatus(true);
       push('/');
     } catch (error) {
-      toast.error("Error in Login 🚫")
+      toast.error("Error in Sign In 🚫")
       console.error(error)
     }
   }
