@@ -1,7 +1,8 @@
 import { Client, Account, ID } from 'appwrite';
-import {project_id,endpoint} from './config';
+import { project_id, endpoint } from './config';
 
-export class AuthService {
+class AuthService {
+    
     client = new Client();
     account;
 
@@ -10,24 +11,24 @@ export class AuthService {
             .setEndpoint(endpoint) // Your API Endpoint
             .setProject(project_id) // Your project ID);
         this.account = new Account(this.client);
-            
+
     }
 
-    async createAccount({email, password, name}: {email: string, password: string, name: string}) {
+    async signup({ email, password, name }: { email: string, password: string, name: string }) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
                 // call another method
-                return this.login({email, password});
+                return this.login({ email, password });
             } else {
-               return  userAccount;
+                return userAccount;
             }
         } catch (error) {
             throw error;
         }
     }
 
-    async login({email, password}:{email: string, password: string}) {
+    async login({ email, password }: { email: string, password: string }) {
         try {
             return await this.account.createEmailSession(email, password);
         } catch (error) {
@@ -44,7 +45,6 @@ export class AuthService {
 
         return null;
     }
-
     async logout() {
 
         try {
