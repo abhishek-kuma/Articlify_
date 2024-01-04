@@ -16,17 +16,24 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation"
-import { number } from 'zod'
+import { createPost } from '@/Appwrite/crateDocument'
+import { useLoginContext } from '@/app/LoginContext'
 
+export interface ContextType {
+  name: string,
+  userid: string
+}
 
 const page = () => {
   const [title, setTitle] = useState('')
-  const [coverLink, setCoverLink] = useState('')
+  const [imageLink, setimageLink] = useState('')
   const [article, setArtcle] = useState('')
   const { push } = useRouter();
+  const { name, userid } = useLoginContext() as ContextType;
   async function handleSubmit() {
     try {
       console.log('Submit Button is clicked');
+      await createPost({ title , imageLink , article , userid , name });
       console.log("Title : " + title);
       console.log("Article :" + article)
       toast.success("Succesfully Posted Artcile ✅");
@@ -43,15 +50,11 @@ const page = () => {
       </h2>
       <Card className='my-3'>
         <CardHeader>
-          <CardTitle>Write the Article Here !! </CardTitle>
+          <CardTitle>Write the Article Here !</CardTitle>
           <CardDescription>
-
-
             Narrow your topic to a specific angle.<br />
             Start with a captivating hook, use clear language, and involve the reader.<br />
             Keep it brief, structured, and impactful within a limited word count.
-
-
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -59,7 +62,7 @@ const page = () => {
           <Input type="text" placeholder="Title" className='my-2' onChange={(e) => setTitle(e.target.value)} />
 
           <Label htmlFor='Link of the Cover Image'>Cover Image Link</Label>
-          <Input type="link" placeholder="Image Link" className='my-2' onChange={(e) => setCoverLink(e.target.value)} />
+          <Input type="link" placeholder="Image Link" className='my-2' onChange={(e) => setimageLink(e.target.value)} />
 
           <Label htmlFor='Write the article Here'>Your Article</Label>
           <Textarea placeholder='Type your article here.' id='article' onChange={(e) => setArtcle(e.target.value)} />

@@ -27,7 +27,7 @@ const Greetings = () => {
      getName();
   }
   else{
-    console.log(name);
+    // console.log(name);
   }
 
     let myDate = new Date();

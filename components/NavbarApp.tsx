@@ -6,26 +6,37 @@ import { ModeToggle } from './Toggle';
 import Link from 'next/link';
 import authService from '@/Appwrite/auth';
 import { useLoginContext } from '@/app/LoginContext'
+import { toast } from 'sonner';
 
 
 export interface ContextType {
   status: boolean
   setStatus: Function
+  name: string
+  setName: Function
+  userid: string
+  setUserid: Function
+
 }
 
 const NavbarApp = () => {
 
   const { status, setStatus } = useLoginContext() as ContextType;
-
+  const { name, setName } = useLoginContext() as ContextType;
+  const { userid, setUserid } = useLoginContext() as ContextType;
 
 
   const handleSignOut = async () => {
     try {
-      setStatus(false);
-      console.log('Is signing out');
       await authService.logout();
+      toast.success("Sign Out success ✅");
+      setStatus(false);
+      setName("");
+      setUserid("");
+      console.log('Is signing out');
     } catch (error) {
       console.error('Error signing out:', error);
+      toast.error("Error in Sign Out 🚫")
     }
   };
 

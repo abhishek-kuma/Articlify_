@@ -22,7 +22,12 @@ import { useRouter } from "next/navigation"
 
 export interface ContextType {
   status: boolean,
-  setStatus: Function
+  setStatus: Function,
+  name: string,
+  setName: Function,
+  userid: string,
+  setUserid: Function
+
 }
 
 export default function LoginAccount() {
@@ -31,16 +36,20 @@ export default function LoginAccount() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { status, setStatus } = useLoginContext() as ContextType;
+  const { userid, setUserid } = useLoginContext() as ContextType;
 
 
   const { push } = useRouter();
-  
+
   async function handleLogin() {
     try {
       const userinfo = await AuthService.login({ email, password });
       // console.log(userinfo)
       toast.success("Sign In success ✅");
       setStatus(true);
+      setUserid(userinfo.$id)
+
+      console.log(userinfo)
       push('/');
     } catch (error) {
       toast.error("Error in Sign In 🚫")
