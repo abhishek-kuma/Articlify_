@@ -20,28 +20,29 @@ import { createPost } from '@/Appwrite/crateDocument'
 import { useLoginContext } from '@/app/LoginContext'
 
 export interface ContextType {
-  name: string,
+  name: string
   userid: string
 }
 
-const page = () => {
+const WritePage = () => {
   const [title, setTitle] = useState('')
   const [imageLink, setimageLink] = useState('')
   const [article, setArtcle] = useState('')
   const { push } = useRouter();
   const { name, userid } = useLoginContext() as ContextType;
+
+
   async function handleSubmit() {
     try {
-      console.log('Submit Button is clicked');
       await createPost({ title , imageLink , article , userid , name });
-      console.log("Title : " + title);
-      console.log("Article :" + article)
       toast.success("Succesfully Posted Artcile ✅");
       push('/');
     } catch (error) {
       toast.error("Error in Posting the Article 🚫")
+      throw error
     }
   }
+
 
   return (
     <div className='m-3 p-3'>
@@ -78,5 +79,5 @@ const page = () => {
   )
 }
 
-export default page
+export default WritePage
 

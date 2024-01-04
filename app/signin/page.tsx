@@ -90,8 +90,10 @@ export default function LoginAccount() {
               <IoMail className="mr-2 h-4 w-4" /> Sign In with Email
             </Button>
             <p className="mt-2 text-xs text-center text-gray-700 dark:text-white">
-              {" "}
-              Don't have an account?{" "}
+            {" "}
+               Don
+               &apos;
+               t have an account?{" "}
               <span className=" text-blue-600 hover:underline"><Link href="/signup">Sign Up</Link></span>
             </p>
           </CardFooter>
